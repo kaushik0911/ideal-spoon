@@ -1,0 +1,615 @@
+{
+	"info": {
+		"_postman_id": "26d27d76-5f5a-490b-ae11-8a949ef6e4b2",
+		"name": "Patient Service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "456923"
+	},
+	"item": [
+		{
+			"name": "Patient Information",
+			"item": [
+				{
+					"name": "GET - INDIVIDUAL",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/patients/:id",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"patients",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "4",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"first_name\": \"John\",\n  \"last_name\": \"Doe\",\n  \"date_of_birth\": \"1985-06-15\",\n  \"gender\": \"Male\",\n  \"contact_number\": \"+123456789\",\n  \"email\": \"john.doe@example.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/patients/",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"patients",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE - PATCH",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"first_name\": \"John\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/patients/:id/",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"patients",
+								":id",
+								""
+							],
+							"variable": [
+								{
+									"id": 0,
+									"key": "id",
+									"value": "1",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE - PUT",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"first_name\": \"John\",\n    \"last_name\": \"Doe\",\n    \"date_of_birth\": \"1985-06-15\",\n    \"gender\": \"Male\",\n    \"contact_number\": \"+987654321\",\n    \"email\": \"john.doe@example.com\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/patients/:id/",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"patients",
+								":id",
+								""
+							],
+							"variable": [
+								{
+									"id": 0,
+									"key": "id",
+									"value": "1",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/patients/:id/",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"patients",
+								":id",
+								""
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "3",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET - ALL",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/patients/",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"patients",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Medical History",
+			"item": [
+				{
+					"name": "GET - INDIVIDUAL",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/medical-history/:id",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"medical-history",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"patient\": 4,\n  \"condition\": \"Diabetes\",\n  \"diagnosis_date\": \"2020-02-20\",\n  \"notes\": \"Patient diagnosed with Type 2 Diabetes.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/medical-history/",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"medical-history",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE - PATCH",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"notes\": \"Patient diagnosed with Type 1 Diabetes.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/medical-history/:id/",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"medical-history",
+								":id",
+								""
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE - PUT",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"patient\": 4,\n  \"condition\": \"Diabetes\",\n  \"diagnosis_date\": \"2020-02-20\",\n  \"notes\": \"Patient diagnosed with Type 2 Diabetes.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/medical-history/:id/",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"medical-history",
+								":id",
+								""
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/medical-history/:id/",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"medical-history",
+								":id",
+								""
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET - ALL",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/medical-history/",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"medical-history",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Prescriptions",
+			"item": [
+				{
+					"name": "GET - INDIVIDUAL",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/prescriptions/:id",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"prescriptions",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"patient\": 4,\n  \"medication\": \"Metformin\",\n  \"dosage\": \"500mg\",\n  \"prescribed_date\": \"2023-11-15\",\n  \"notes\": \"Take twice daily.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/prescriptions/",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"prescriptions",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE - PATCH",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"notes\": \"Take twice weekly.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/prescriptions/:id/",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"prescriptions",
+								":id",
+								""
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE - PUT",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"patient\": 4,\n  \"medication\": \"Metformin\",\n  \"dosage\": \"500mg\",\n  \"prescribed_date\": \"2023-11-15\",\n  \"notes\": \"Take twice daily.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/prescriptions/:id/",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"prescriptions",
+								":id",
+								""
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/prescriptions/:id/",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"prescriptions",
+								":id",
+								""
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET - ALL",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/prescriptions/",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"prescriptions",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
