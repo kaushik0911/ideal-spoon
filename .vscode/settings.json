@@ -1,6 +1,7 @@
 {
     "cSpell.words": [
-        "asgi"
+        "asgi",
+        "viewsets"
     ],
     "sqltools.connections": []
 }
