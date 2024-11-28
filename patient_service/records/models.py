@@ -26,3 +26,23 @@ class LabResult(models.Model):
     test_name = models.CharField(max_length=255)
     result = models.TextField()
     date_conducted = models.DateField()
+
+
+from django.db.models.signals import post_save, post_delete
+from django.dispatch import receiver
+from .models import Patient
+from records.utils.event_publisher import publish_event
+
+@receiver(post_save, sender=Patient)
+def patient_saved(sender, instance, created, **kwargs):
+    event_type = "PatientCreated" if created else "PatientUpdated"
+    data = {
+        "patient_id": instance.id,
+        "name": f"{instance.first_name} {instance.last_name}",
+        "contact_number": instance.contact_number
+    }
+    publish_event(event_type, data)
+
+@receiver(post_delete, sender=Patient)
+def patient_deleted(sender, instance, **kwargs):
+    publish_event("PatientDeleted", {"patient_id": instance.id})
