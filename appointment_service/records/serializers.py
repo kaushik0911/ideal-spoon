@@ -12,17 +12,21 @@ class PatientSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class AvailabilitySerializer(serializers.ModelSerializer):
-    doctor = DoctorSerializer(many=True, read_only=True)  # Display doctor name instead of ID
-
     class Meta:
         model = Availability
         fields = '__all__'
 
-class AppointmentSerializer(serializers.ModelSerializer):
-    patient = serializers.StringRelatedField()  # Display patient name
-    doctor = serializers.StringRelatedField()  # Display doctor name
-    availability = serializers.StringRelatedField()  # Display availability details
+class AppointmentReadSerializer(serializers.ModelSerializer):
+    patient = PatientSerializer()
+    doctor = DoctorSerializer()
+    availability = AvailabilitySerializer()
 
     class Meta:
         model = Appointment
         fields = '__all__'
+
+class AppointmentWriteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Appointment
+        fields = '__all__'
+

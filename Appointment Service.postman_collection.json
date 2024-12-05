@@ -1,0 +1,685 @@
+{
+	"info": {
+		"_postman_id": "e61ebfc2-8b55-4e75-956f-4db0491c3481",
+		"name": "Appointment Service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "456923"
+	},
+	"item": [
+		{
+			"name": "Patient Information",
+			"item": [
+				{
+					"name": "GET - INDIVIDUAL",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/patients/:id",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"patients",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "4",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET - ALL",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/patients/",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"patients",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Doctor Information",
+			"item": [
+				{
+					"name": "GET - INDIVIDUAL",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/doctors/:id",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"doctors",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Tharusha\",\n  \"specialty\": \"Diabetes\",\n  \"contact_number\": \"123123123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/doctors/",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"doctors",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE - PATCH",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"notes\": \"Patient diagnosed with Type 1 Diabetes.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/doctors/:id/",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"doctors",
+								":id",
+								""
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE - PUT",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"patient\": 4,\n  \"condition\": \"Diabetes\",\n  \"diagnosis_date\": \"2020-02-20\",\n  \"notes\": \"Patient diagnosed with Type 2 Diabetes.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/doctors/:id/",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"doctors",
+								":id",
+								""
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/doctors/:id/",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"doctors",
+								":id",
+								""
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET - ALL",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/doctors/",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"doctors",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Doctor Availability",
+			"item": [
+				{
+					"name": "GET - INDIVIDUAL",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/availabilities/:id",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"availabilities",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"doctor\": 1,\n  \"date\": \"2024-11-25\",\n  \"start_time\": \"09:00:00\",\n  \"end_time\": \"12:00:00\",\n  \"status\": true\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/availabilities/",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"availabilities",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE - PATCH",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"notes\": \"Take twice weekly.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/availabilities/:id/",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"availabilities",
+								":id",
+								""
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE - PUT",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"patient\": 4,\n  \"medication\": \"Metformin\",\n  \"dosage\": \"500mg\",\n  \"prescribed_date\": \"2023-11-15\",\n  \"notes\": \"Take twice daily.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/availabilities/:id/",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"availabilities",
+								":id",
+								""
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/availabilities/:id/",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"availabilities",
+								":id",
+								""
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET - ALL",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/availabilities/",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"availabilities",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Appointment",
+			"item": [
+				{
+					"name": "GET - INDIVIDUAL",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/appointments/:id",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"appointments",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"patient\": 1,\n  \"doctor\": 1,\n  \"availability\": 2,\n  \"status\": \"Scheduled\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/appointments/",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"appointments",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE - PATCH",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"notes\": \"Take twice weekly.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/appointments/:id/",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"appointments",
+								":id",
+								""
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE - PUT",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"patient\": 4,\n  \"medication\": \"Metformin\",\n  \"dosage\": \"500mg\",\n  \"prescribed_date\": \"2023-11-15\",\n  \"notes\": \"Take twice daily.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/appointments/:id/",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"appointments",
+								":id",
+								""
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/appointments/:id/",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"appointments",
+								":id",
+								""
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET - ALL",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/appointments/",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"appointments",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

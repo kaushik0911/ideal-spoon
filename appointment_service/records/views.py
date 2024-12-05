@@ -1,6 +1,6 @@
 from rest_framework import viewsets
 from .models import Doctor, Patient, Availability, Appointment
-from .serializers import DoctorSerializer, PatientSerializer, AvailabilitySerializer, AppointmentSerializer
+from .serializers import DoctorSerializer, PatientSerializer, AvailabilitySerializer, AppointmentReadSerializer, AppointmentWriteSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 
 class DoctorViewSet(viewsets.ModelViewSet):
@@ -20,4 +20,8 @@ class AvailabilityViewSet(viewsets.ModelViewSet):
 
 class AppointmentViewSet(viewsets.ModelViewSet):
     queryset = Appointment.objects.all()
-    serializer_class = AppointmentSerializer
+
+    def get_serializer_class(self):
+        if self.request.method in ['POST', 'PUT', 'PATCH']:
+            return AppointmentWriteSerializer
+        return AppointmentReadSerializer
