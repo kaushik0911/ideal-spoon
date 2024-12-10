@@ -13,6 +13,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the entire project into the container
 COPY . /app/
 
+RUN rm /app/.env
+
 # Expose the port the app runs on (default Django development server port)
 EXPOSE 8000
 

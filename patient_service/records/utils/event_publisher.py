@@ -1,14 +1,18 @@
 import pika
 import json
+import datetime
+
+RABBITMQ_HOST = "rabbitmq"
+QUEUE_NAME = "patient_events"
 
 def publish_event(event_type, data):
-    connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))  # Replace 'localhost' with your RabbitMQ host
+    connection = pika.BlockingConnection(pika.ConnectionParameters(RABBITMQ_HOST))  # Replace 'localhost' with your RabbitMQ host
     channel = connection.channel()
-    channel.queue_declare(queue='patient_events')  # Declare queue if it doesn't exist
+    channel.queue_declare(queue=QUEUE_NAME)  # Declare queue if it doesn't exist
 
     event = {
         "event": event_type,
-        "timestamp": "2024-11-20T12:00:00Z",
+        "timestamp": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         "data": data
     }
     channel.basic_publish(
