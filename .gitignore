@@ -1,4 +1,3 @@
 *.sqlite3
-patient_service/patient_service/settings.py
 __pycache__
 .env
