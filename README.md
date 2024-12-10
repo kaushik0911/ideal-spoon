@@ -24,7 +24,9 @@ minikube start
 
 docker build -t consumer-service-app:latest .
 
-kubectl create secret generic patient-app-env --from-env-file=.env
+docker build -t patient-consumer-service:latest .
+
+kubectl create secret generic -app-env --from-env-file=.env
 
 kubectl apply -f consumer-deployment.yaml
 
@@ -41,6 +43,8 @@ docker rmi consumer-service-app
 kubectl apply -f deployment.yaml
 
 kubectl apply -f service.yaml
+
+kubectl get pods
 
 kubectl logs consumer-service-6dd95ddd47-85jm5
 

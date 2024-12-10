@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: consumer-service
+  name: patient-consumer
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: consumer-service
+      app: patient-consumer
   template:
     metadata:
       labels:
-        app: consumer-service
+        app: patient-consumer
     spec:
       containers:
-      - name: consumer-service
-        image: consumer-service-app:latest
+      - name: patient-consumer
+        image: patient-consumer-service-app:latest
         imagePullPolicy: IfNotPresent
         envFrom:
           - secretRef:
-              name: patient-app-env
+              name: patient-consumer-app-env
         # ports:
         # - containerPort: 8000

@@ -15,6 +15,9 @@ COPY . /app/
 
 RUN rm /app/.env
 
+CMD ["python", "manage.py", "makemigrations"]
+CMD ["python", "manage.py", "migrate"]
+
 # Expose the port the app runs on (default Django development server port)
 EXPOSE 8000
 
