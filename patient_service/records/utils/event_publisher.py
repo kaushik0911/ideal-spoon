@@ -1,12 +1,14 @@
 import pika
 import json
 import datetime
+from dotenv import load_dotenv
+import os
 
-RABBITMQ_HOST = "rabbitmq"
-QUEUE_NAME = "patient_events"
+load_dotenv()
 
 def publish_event(event_type, data):
-    connection = pika.BlockingConnection(pika.ConnectionParameters(RABBITMQ_HOST))  # Replace 'localhost' with your RabbitMQ host
+    credentials = pika.PlainCredentials(os.getenv('RABBITMQ_USER'), os.getenv('RABBITMQ_PASS'))
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host=RABBITMQ_HOST, credentials=credentials)) # Replace 'localhost' with your RabbitMQ host
     channel = connection.channel()
     channel.queue_declare(queue=QUEUE_NAME)  # Declare queue if it doesn't exist
 

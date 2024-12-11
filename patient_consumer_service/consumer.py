@@ -8,7 +8,7 @@ load_dotenv()
 
 # Database connection settings
 DB_CONFIG = {
-    "dbname": os.getenv('DBNAME'),
+    "dbname": "postgres",
     "user": os.getenv('DBUSER'),
     "password": os.getenv('DBPASSWORD'),
     "host": os.getenv('DBHOST'),
@@ -18,7 +18,6 @@ DB_CONFIG = {
 # RabbitMQ settings
 RABBITMQ_HOST = "rabbitmq"
 QUEUE_NAME = "patient_events"
-SCHEMA = os.getenv('DBSCHEMA')
 
 # Connect to the database
 def get_db_connection():
@@ -32,13 +31,12 @@ def process_message(ch, method, properties, body):
         patient_id = data["patient_id"]
         name = data["name"]
         contact_number = data["contact_number"]
-        table = f"{SCHEMA}.records_patient"
 
         # Update patient in the database
         conn = get_db_connection()
         cursor = conn.cursor()
         query = """
-            INSERT INTO appointment_service.records_patient (patient_id, name, contact_number)
+            INSERT INTO records_patient (patient_id, name, contact_number)
             VALUES (%s, %s, %s)
             ON CONFLICT (patient_id)
             DO UPDATE SET name = EXCLUDED.name, contact_number = EXCLUDED.contact_number;
@@ -56,8 +54,8 @@ def process_message(ch, method, properties, body):
 
 # Main consumer logic
 def start_consumer():
-    credentials = pika.PlainCredentials('admin', 'password')
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host=RABBITMQ_HOST, credentials=credentials))
+    credentials = pika.PlainCredentials(os.getenv('RABBITMQ_USER'), os.getenv('RABBITMQ_PASS'))
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host=RABBITMQ_HOST, credentials=credentials)) 
     channel = connection.channel()
     channel.queue_declare(queue=QUEUE_NAME)
 
