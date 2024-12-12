@@ -15,13 +15,15 @@ class MedicalHistory(models.Model):
     notes = models.TextField()
 
 class Prescription(models.Model):
+    prescription_id = models.IntegerField(unique=True)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, related_name='prescriptions')
     medication = models.CharField(max_length=255)
-    dosage = models.CharField(max_length=50)
     prescribed_date = models.DateField()
     notes = models.TextField()
+    doctor_name = models.CharField(max_length=255)
 
 class LabResult(models.Model):
+    lab_result_id = models.IntegerField(unique=True)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, related_name='lab_results')
     test_name = models.CharField(max_length=255)
     result = models.TextField()
@@ -30,7 +32,7 @@ class LabResult(models.Model):
 
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
-from .models import Patient
+from .models import Patient, Prescription
 from records.utils.event_publisher import publish_event
 
 @receiver(post_save, sender=Patient)
@@ -41,8 +43,9 @@ def patient_saved(sender, instance, created, **kwargs):
         "name": f"{instance.first_name} {instance.last_name}",
         "contact_number": instance.contact_number
     }
-    publish_event(event_type, data)
+    publish_event(event_type, data, "patient_queue")
 
 @receiver(post_delete, sender=Patient)
 def patient_deleted(sender, instance, **kwargs):
-    publish_event("PatientDeleted", {"patient_id": instance.id})
+    publish_event("PatientDeleted", {"patient_id": instance.id}, "patient_queue")
+

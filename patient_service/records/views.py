@@ -15,10 +15,10 @@ class MedicalHistoryViewSet(viewsets.ModelViewSet):
     queryset = MedicalHistory.objects.all()
     serializer_class = MedicalHistorySerializer
 
-class PrescriptionViewSet(viewsets.ModelViewSet):
+class PrescriptionViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Prescription.objects.all()
     serializer_class = PrescriptionSerializer
 
-class LabResultViewSet(viewsets.ModelViewSet):
+class LabResultViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = LabResult.objects.all()
     serializer_class = LabResultSerializer
