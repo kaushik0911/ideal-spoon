@@ -29,9 +29,37 @@ class Availability(models.Model):
 
 class Appointment(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, related_name="appointments")
+    availability = models.OneToOneField(Availability, on_delete=models.CASCADE, related_name="appointments")
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, related_name="appointments")
-    availability = models.ForeignKey(Availability, on_delete=models.CASCADE, related_name="appointments")
+
     status = models.CharField(max_length=50, default='Scheduled')
+
+    def save(self, *args, **kwargs):
+        # Automatically populate the doctor field from the availability relation
+        if self.availability and self.availability.doctor:
+            self.doctor = self.availability.doctor
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"Appointment for {self.patient} with {self.doctor} on {self.availability} : {self.status}"
+
+class LabResult(models.Model):
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, related_name="lab_results")
+    test_name = models.CharField(max_length=255)
+    result = models.TextField()
+    date_conducted = models.DateField()
+    appointment = models.ForeignKey(
+        Appointment,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name="lab_results"
+    )
+
+class Prescription(models.Model):
+    appointment = models.ForeignKey(Appointment, on_delete=models.CASCADE, related_name='prescriptions')
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, related_name="prescriptions")
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, related_name="prescriptions")
+    medication = models.CharField(max_length=255)
+    prescribed_date = models.DateField()
+    notes = models.TextField()
