@@ -63,3 +63,42 @@ class Prescription(models.Model):
     medication = models.CharField(max_length=255)
     prescribed_date = models.DateField()
     notes = models.TextField()
+
+
+from django.db.models.signals import post_save, post_delete
+from django.dispatch import receiver
+from .models import Prescription
+from records.utils.event_publisher import publish_event
+
+@receiver(post_save, sender=Prescription)
+def prescription_saved(sender, instance, created, **kwargs):
+    event_type = "PrescriptionCreated" if created else "PrescriptionUpdated"
+    data = {
+        "prescription_id": instance.id,
+        "patient_id": instance.patient.id,
+        "doctor_name": instance.doctor.name,
+        "medication": instance.medication,
+        "prescribed_date": instance.prescribed_date.strftime("%Y-%m-%d %H:%M:%S"),
+        "notes": instance.notes
+    }
+    publish_event(event_type, data, "prescription_queue")
+
+@receiver(post_delete, sender=Prescription)
+def prescription_deleted(sender, instance, **kwargs):
+    publish_event("PrescriptionDeleted", {"prescription_id": instance.id}, "prescription_queue")
+
+@receiver(post_save, sender=LabResult)
+def lab_result_saved(sender, instance, created, **kwargs):
+    event_type = "LabResultCreated" if created else "LabResultUpdated"
+    data = {
+        "lab_result_id": instance.id,
+        "patient_id": instance.patient.id,
+        "test_name": instance.test_name,
+        "result": instance.result,
+        "date_conducted": instance.date_conducted.strftime("%Y-%m-%d %H:%M:%S")
+    }
+    publish_event(event_type, data, "lab_result_queue")
+
+@receiver(post_delete, sender=LabResult)
+def lab_result_deleted(sender, instance, **kwargs):
+    publish_event("LabResultDeleted", {"lab_result_id": instance.id}, "lab_result_queue")
