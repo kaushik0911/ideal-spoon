@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prescription-consumer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prescription-consumer
+  template:
+    metadata:
+      labels:
+        app: prescription-consumer
+    spec:
+      containers:
+      - name: prescription-consumer
+        image: prescription-consumer-service-app:latest
+        imagePullPolicy: IfNotPresent
+        envFrom:
+          - secretRef:
+              name: prescription-consumer-app-env
+        # ports:
+        # - containerPort: 8000
