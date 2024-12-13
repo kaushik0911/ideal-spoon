@@ -14,7 +14,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . /app/
 
 # Remove the .env file (if necessary)
-RUN rm /app/.env
+RUN [ -f /app/.env ] && rm /app/.env || echo "File not found, skipping removal"
 
 # Copy the entrypoint script
 COPY entrypoint.sh /app/entrypoint.sh
