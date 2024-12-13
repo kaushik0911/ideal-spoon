@@ -17,14 +17,6 @@ jobs:
         run: |
           echo 'Folder name: "${{ github.event.inputs.folder }}"'
 
-      - name: Verify Folder Exists
-        if: env.skip_build == 'false'
-        run: |
-          if [ ! -d "${{ github.event.inputs.folder }}" ]; then
-            echo "Error: Folder '${{ github.event.inputs.folder }}' does not exist."
-            exit 1
-          fi
-
       - name: Check for Folder Input
         id: check-folder
         run: |
@@ -33,6 +25,7 @@ jobs:
             echo "skip_build=true" >> $GITHUB_ENV
           else
             echo "skip_build=false" >> $GITHUB_ENV
+          if
 
       - name: Skip Job if No Folder Provided
         if: env.skip_build == 'true'
