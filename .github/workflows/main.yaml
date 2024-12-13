@@ -1,4 +1,5 @@
-name: MediTrack - for ${{ github.event.inputs.folder }} | Build and Deploy to GKE
+name: MediTrack System | Build and Deploy to GKE
+run-name: Deployment of ${{ github.event.inputs.folder }}_app
 
 on:
   workflow_dispatch:
