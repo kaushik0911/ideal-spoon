@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       folder:
-        description: 'The folder to build (e.g., appointment_service)'
-        required: false"
-        default: ''
+        description: 'The folder to build (e.g., app1, app2)'
+        required: false
+        default: ""
 
 jobs:
   build-and-push:
