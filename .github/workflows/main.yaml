@@ -4,48 +4,53 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'appointment_service/**'
+    inputs:
+      folder:
+        description: 'The folder to build (e.g., appointment_service)'
+        required: false"
+        default: ''
 
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        app: [appointment_service] # List all app folder names here
-
     steps:
+      - name: Check for Folder Input
+        id: check-folder
+        run: |
+          if [ -z "${{ github.event.inputs.folder }}" ]; then
+            echo "No folder provided. Skipping build."
+            echo "skip_build=true" >> $GITHUB_ENV
+          else
+            echo "skip_build=false" >> $GITHUB_ENV
+
+      - name: Skip Job if No Folder Provided
+        if: env.skip_build == 'true'
+        run: echo "Skipping build as no folder was provided."
       - name: Checkout code
+        if: env.skip_build == 'false'
         uses: actions/checkout@v3
 
-      - name: Determine if this app folder was modified
-        id: check_changes
+      - name: Verify Folder Exists
+        if: env.skip_build == 'false'
         run: |
-          if git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -q "${{ matrix.app }}/"; then
-            echo "run=true" >> $GITHUB_ENV
-          else
-            echo "run=false" >> $GITHUB_ENV
+          if [ ! -d "${{ github.event.inputs.folder }}" ]; then
+            echo "Error: Folder '${{ github.event.inputs.folder }}' does not exist."
+            exit 1
           fi
 
-      - name: Skip job if no changes detected
-        if: env.run != 'true'
-        run: echo "No changes in ${{ matrix.app }}, skipping build."
-
       - name: Log in to Docker Hub
-        if: env.run == 'true'
+        if: env.skip_build == 'false'
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
-
       - name: Build and Push Docker Image
-        if: env.run == 'true'
+        if: env.skip_build == 'false'
         run: |
-          docker build -t kaushiks93/${{ matrix.app }}-app:latest ${{ matrix.app }}
-          docker push kaushiks93/${{ matrix.app }}-app:latest
-
+          docker build -t kaushiks93/${{ github.event.inputs.folder }}-app:latest ${{ github.event.inputs.folder }}
+          docker push kaushiks93/${{ github.event.inputs.folder }}-app:latest
 
       # - name: Set up Docker Buildx
       #   uses: docker/setup-buildx-action@v2
