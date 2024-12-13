@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: redshift-migration
+spec:
+  schedule: "* * * * *" # Run daily at midnight -> "0 0 * * *"
+  successfulJobsHistoryLimit: 2
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: redshift-migration
+            image: redshift-migration-service-app:latest
+            imagePullPolicy: IfNotPresent
+            envFrom:
+              - secretRef:
+                  name: redshift-migration-app-env
+          restartPolicy: OnFailure
+
