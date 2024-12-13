@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: patient-service
-        image: patient-service-app:latest
+        image: kaushiks93/patient_service_app:latest
         imagePullPolicy: IfNotPresent
         envFrom:
           - secretRef:

@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       folder:
-        description: 'The folder to build (e.g., app1, app2)'
+        description: 'The folder to build (e.g., appointment_service, patient_consumer_service)'
         required: false
         default: ''
 
@@ -54,5 +54,5 @@ jobs:
       - name: Build and Push Docker Image
         if: env.skip_build == 'false'
         run: |
-          docker build -t kaushiks93/${{ github.event.inputs.folder }}-app:latest ${{ github.event.inputs.folder }}
-          docker push kaushiks93/${{ github.event.inputs.folder }}-app:latest
+          docker build -t kaushiks93/${{ github.event.inputs.folder }}_app:latest ${{ github.event.inputs.folder }}
+          docker push kaushiks93/${{ github.event.inputs.folder }}_app:latest

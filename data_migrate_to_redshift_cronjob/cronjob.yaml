@@ -11,7 +11,7 @@ spec:
         spec:
           containers:
           - name: redshift-migration
-            image: redshift-migration-service-app:latest
+            image: kaushiks93/data_migrate_to_redshift_cronjob_app:latest
             imagePullPolicy: IfNotPresent
             envFrom:
               - secretRef:

@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: prescription-consumer
-        image: prescription-consumer-service-app:latest
+        image: kaushiks93/lab_result_consumer_service_app:latest
         imagePullPolicy: IfNotPresent
         envFrom:
           - secretRef:

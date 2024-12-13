@@ -14,10 +14,8 @@ spec:
     spec:
       containers:
       - name: prescription-consumer
-        image: prescription-consumer-service-app:latest
+        image: kaushiks93/prescription_consumer_service:latest
         imagePullPolicy: IfNotPresent
         envFrom:
           - secretRef:
               name: prescription-consumer-app-env
-        # ports:
-        # - containerPort: 8000

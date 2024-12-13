@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: appointment-service
-        image: appointment-service-app:latest
+        image: kaushiks93/appointment_service_app:latest
         imagePullPolicy: IfNotPresent
         envFrom:
           - secretRef:
