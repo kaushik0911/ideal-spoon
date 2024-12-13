@@ -13,8 +13,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Verify Folder Exists
-        run: echo "Folder name: '${{ github.event.inputs.folder }}'"
+      - name: Verify Folder Name
+        run: |
+          echo 'Folder name: "${{ github.event.inputs.folder }}"'
 
       - name: Verify Folder Exists
         if: env.skip_build == 'false'
