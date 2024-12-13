@@ -25,7 +25,8 @@ jobs:
             echo "skip_build=true" >> $GITHUB_ENV
           else
             echo "skip_build=false" >> $GITHUB_ENV
-          if
+          fi
+
 
       - name: Skip Job if No Folder Provided
         if: env.skip_build == 'true'
