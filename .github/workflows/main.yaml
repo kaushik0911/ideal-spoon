@@ -1,0 +1,76 @@
+name: Appointment Service Build and Deploy to GKE
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'appointment_service/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        app: [appointment_service] # List all app folder names here
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Determine if this app folder was modified
+        id: check_changes
+        run: |
+          if git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -q "${{ matrix.app }}/"; then
+            echo "run=true" >> $GITHUB_ENV
+          else
+            echo "run=false" >> $GITHUB_ENV
+          fi
+
+      - name: Skip job if no changes detected
+        if: env.run != 'true'
+        run: echo "No changes in ${{ matrix.app }}, skipping build."
+
+      - name: Log in to Docker Hub
+        if: env.run == 'true'
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+
+      - name: Build and Push Docker Image
+        if: env.run == 'true'
+        run: |
+          docker build -t kaushiks93/${{ matrix.app }}-app:latest ${{ matrix.app }}
+          docker push kaushiks93/${{ matrix.app }}-app:latest
+
+
+      # - name: Set up Docker Buildx
+      #   uses: docker/setup-buildx-action@v2
+
+      # - name: Log in to Docker Hub
+      #   uses: docker/login-action@v2
+      #   with:
+      #     username: ${{ secrets.DOCKER_HUB_USERNAME }}
+      #     password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      # - name: Build and Push Docker Image
+      #   run: |
+      #     docker build -t kaushiks93/appointment-service-app:latest .
+      #     docker push kaushiks93/appointment-service-app:latest
+
+      # - name: Set up gcloud CLI
+      #   uses: google-github-actions/setup-gcloud@v1
+      #   with:
+      #     service_account_key: ${{ secrets.GCLOUD_KEY }}
+      #     project_id: <your-project-id>
+
+      # - name: Authenticate with GKE
+      #   run: |
+      #     gcloud container clusters get-credentials django-cluster --region=us-central1
+
+      # - name: Deploy to GKE
+      #   run: |
+      #     kubectl apply -f k8s-deployment.yaml
