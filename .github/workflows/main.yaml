@@ -1,7 +1,7 @@
 name: Appointment Service Build and Deploy to GKE
 
 on:
-  push:
+  workflow_dispatch:
     branches:
       - main
     inputs:
