@@ -2,8 +2,6 @@ name: Appointment Service Build and Deploy to GKE
 
 on:
   workflow_dispatch:
-    branches:
-      - main
     inputs:
       folder:
         description: 'The folder to build (e.g., appointment_service)'
