@@ -6,7 +6,7 @@ on:
       folder:
         description: 'The folder to build (e.g., app1, app2)'
         required: false
-        default: ""
+        default: ''
 
 jobs:
   build-and-push:
@@ -25,7 +25,8 @@ jobs:
       - name: Skip Job if No Folder Provided
         if: env.skip_build == 'true'
         run: echo "Skipping build as no folder was provided."
-      - name: Checkout code
+
+      - name: Checkout Code
         if: env.skip_build == 'false'
         uses: actions/checkout@v3
 
@@ -49,31 +50,3 @@ jobs:
         run: |
           docker build -t kaushiks93/${{ github.event.inputs.folder }}-app:latest ${{ github.event.inputs.folder }}
           docker push kaushiks93/${{ github.event.inputs.folder }}-app:latest
-
-      # - name: Set up Docker Buildx
-      #   uses: docker/setup-buildx-action@v2
-
-      # - name: Log in to Docker Hub
-      #   uses: docker/login-action@v2
-      #   with:
-      #     username: ${{ secrets.DOCKER_HUB_USERNAME }}
-      #     password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-
-      # - name: Build and Push Docker Image
-      #   run: |
-      #     docker build -t kaushiks93/appointment-service-app:latest .
-      #     docker push kaushiks93/appointment-service-app:latest
-
-      # - name: Set up gcloud CLI
-      #   uses: google-github-actions/setup-gcloud@v1
-      #   with:
-      #     service_account_key: ${{ secrets.GCLOUD_KEY }}
-      #     project_id: <your-project-id>
-
-      # - name: Authenticate with GKE
-      #   run: |
-      #     gcloud container clusters get-credentials django-cluster --region=us-central1
-
-      # - name: Deploy to GKE
-      #   run: |
-      #     kubectl apply -f k8s-deployment.yaml
