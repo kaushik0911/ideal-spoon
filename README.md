@@ -28,7 +28,7 @@ docker build -t patient-consumer-service:latest .
 
 kubectl create secret generic redshift-migration-app-env --from-env-file=.env
 
-kubectl create secret generic patient-service-app-env --from-env-file=.env
+kubectl create secret generic appointment-app-env --from-env-file=.env
 
 
 kubectl apply -f consumer-deployment.yaml
