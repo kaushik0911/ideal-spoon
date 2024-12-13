@@ -16,8 +16,8 @@ DB_CONFIG = {
 }
 
 # RabbitMQ settings
-RABBITMQ_HOST = "rabbitmq"
-QUEUE_NAME = "patient_events"
+RABBITMQ_HOST = os.getenv('RABBITMQ_HOST')
+QUEUE_NAME = "patient_queue"
 
 # Connect to the database
 def get_db_connection():
@@ -55,7 +55,7 @@ def process_message(ch, method, properties, body):
 # Main consumer logic
 def start_consumer():
     credentials = pika.PlainCredentials(os.getenv('RABBITMQ_USER'), os.getenv('RABBITMQ_PASS'))
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host=RABBITMQ_HOST, credentials=credentials)) 
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host=RABBITMQ_HOST, port=os.getenv('RABBITMQ_PORT'), credentials=credentials)) 
     channel = connection.channel()
     channel.queue_declare(queue=QUEUE_NAME)
 

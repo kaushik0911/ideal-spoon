@@ -14,10 +14,8 @@ spec:
     spec:
       containers:
       - name: patient-consumer
-        image: patient-consumer-service-app:latest
+        image: kaushiks93/patient_consumer_service-app:latest
         imagePullPolicy: IfNotPresent
         envFrom:
           - secretRef:
               name: patient-consumer-app-env
-        # ports:
-        # - containerPort: 8000

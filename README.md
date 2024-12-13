@@ -28,6 +28,9 @@ docker build -t patient-consumer-service:latest .
 
 kubectl create secret generic redshift-migration-app-env --from-env-file=.env
 
+kubectl create secret generic patient-service-app-env --from-env-file=.env
+
+
 kubectl apply -f consumer-deployment.yaml
 
 kubectl get deployment
@@ -55,6 +58,7 @@ kubectl port-forward service/rabbitmq 15672:15672
 
 
 kubectl port-forward service/patient-service 8000:8000
+
 
 kubectl get secret redshift-migration-app-env -o yaml
 
