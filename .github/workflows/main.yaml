@@ -58,7 +58,7 @@ jobs:
       - name: Run Tests
         if: env.skip_build == 'false'
         run: |
-          pytest --ds=${{ github.event.inputs.folder }}.settings ${{ github.event.inputs.folder }}/tests/
+          pytest --ds=${{ github.event.inputs.folder }}.settings ${{ github.event.inputs.folder }}
 
       # Step 7: Log in to Docker Hub
       - name: Log in to Docker Hub
