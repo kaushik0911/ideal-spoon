@@ -18,6 +18,4 @@ spec:
         imagePullPolicy: IfNotPresent
         envFrom:
           - secretRef:
-              name: prescription-consumer-app-env
-        # ports:
-        # - containerPort: 8000
+              name: lab-result-consumer-app-env
