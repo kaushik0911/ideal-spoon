@@ -77,17 +77,26 @@ WSGI_APPLICATION = 'patient_service.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "postgres",
-        "USER": os.getenv('DBUSER'),
-        "PASSWORD": os.getenv('DBPASSWORD'),
-        "HOST": os.getenv('DBHOST'),
-        "PORT": os.getenv('DBPORT')
+import sys
+# Use SQLite for testing
+if 'test' in sys.argv:
+    DATABASES = {
+        "default": {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': ':memory:',  # In-memory database for faster test execution
+        }
     }
-}
-
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": "postgres",
+            "USER": os.getenv('DBUSER'),
+            "PASSWORD": os.getenv('DBPASSWORD'),
+            "HOST": os.getenv('DBHOST'),
+            "PORT": os.getenv('DBPORT')
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -129,3 +138,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Add a TESTING flag
+TESTING = 'test' in sys.argv

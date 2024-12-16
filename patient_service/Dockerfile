@@ -16,6 +16,9 @@ COPY . /app/
 # Remove the .env file (if necessary)
 RUN [ -f /app/.env ] && rm /app/.env || echo "File not found, skipping removal"
 
+# Running the test cases on sqlite on memory
+RUN python manage.py test
+
 # Copy the entrypoint script
 COPY entrypoint.sh /app/entrypoint.sh
 
