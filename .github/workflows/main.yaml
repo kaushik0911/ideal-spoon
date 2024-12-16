@@ -55,10 +55,11 @@ jobs:
           pip install pytest pytest-django
 
       # Step 6: Run Tests
-      - name: Run Tests
+      - name: Run Django Tests
         if: env.skip_build == 'false'
         run: |
-          pytest --ds=${{ github.event.inputs.folder }}.settings ${{ github.event.inputs.folder }}
+          cd ${{ github.event.inputs.folder }}
+          python manage.py test
 
       # Step 7: Log in to Docker Hub
       - name: Log in to Docker Hub
