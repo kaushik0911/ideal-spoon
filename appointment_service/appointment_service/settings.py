@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = SECRET_KEY = os.getenv('PS_SECRET_KEY')
+SECRET_KEY = SECRET_KEY = "django-insecure-+8h))70(i5ky+9ilsdc652a6*(x@nb4j^lh5!eu0+i!6lgip!v"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -78,16 +78,26 @@ WSGI_APPLICATION = 'appointment_service.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "postgres",
-        "USER": os.getenv('DBUSER'),
-        "PASSWORD": os.getenv('DBPASSWORD'),
-        "HOST": os.getenv('DBHOST'),
-        "PORT": os.getenv('DBPORT')
+import sys
+# Use SQLite for testing
+if 'test' in sys.argv:
+    DATABASES = {
+        "default": {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': ':memory:',  # In-memory database for faster test execution
+        }
     }
-}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": "postgres",
+            "USER": os.getenv('DBUSER'),
+            "PASSWORD": os.getenv('DBPASSWORD'),
+            "HOST": os.getenv('DBHOST'),
+            "PORT": os.getenv('DBPORT')
+        }
+    }
 
 
 # Password validation
@@ -130,3 +140,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Add a TESTING flag
+TESTING = 'test' in sys.argv

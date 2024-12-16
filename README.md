@@ -58,6 +58,8 @@ kubectl logs consumer-service-6dd95ddd47-85jm5
 
 docker build -t patient-service-app:latest .
 
+docker build -t appointment-service-app:latest .
+
 kubectl port-forward service/rabbitmq 15672:15672
 
 
@@ -83,3 +85,4 @@ docker build -t redshift-migration-service-app:latest .
 
 
 docker build -t patient-service-app:latest .
+
