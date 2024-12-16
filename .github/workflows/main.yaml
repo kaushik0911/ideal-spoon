@@ -54,14 +54,20 @@ jobs:
           pip install -r ${{ github.event.inputs.folder }}/requirements.txt
           pip install pytest pytest-django
 
-      # Step 6: Run Tests
-      - name: Run Django Tests
+      # Step 6: Set Up Test Database
+      - name: Configure SQLite Database for Testing
         if: env.skip_build == 'false'
         run: |
-          cd ${{ github.event.inputs.folder }}
-          python manage.py test
+          export DJANGO_SETTINGS_MODULE="${{ github.event.inputs.folder }}.settings"
+          python manage.py migrate --no-input
 
-      # Step 7: Log in to Docker Hub
+      # Step 7: Run Tests
+      - name: Run Tests
+        if: env.skip_build == 'false'
+        run: |
+          pytest --ds=${{ github.event.inputs.folder }}.settings ${{ github.event.inputs.folder }}/tests/
+
+      # Step 8: Log in to Docker Hub
       - name: Log in to Docker Hub
         if: env.skip_build == 'false'
         uses: docker/login-action@v2
@@ -69,7 +75,7 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
-      # Step 8: Build and Push Docker Image
+      # Step 9: Build and Push Docker Image
       - name: Build and Push Docker Image
         if: env.skip_build == 'false'
         run: |
