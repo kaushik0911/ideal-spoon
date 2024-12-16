@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: prescription-consumer
+  name: lab-result-consumer
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: prescription-consumer
+      app: lab-result-consumer
   template:
     metadata:
       labels:
-        app: prescription-consumer
+        app: lab-result-consumer
     spec:
       containers:
-      - name: prescription-consumer
+      - name: lab-result-consumer
         image: kaushiks93/lab_result_consumer_service_app:latest
         imagePullPolicy: IfNotPresent
         envFrom:
