@@ -55,8 +55,8 @@ jobs:
           pip install pytest pytest-django
 
       # Step 6: Run Tests
-      - name: Run Django Tests
-        if: env.skip_build == 'false'
+      - name: Run Django Tests && (${{ github.event.inputs.folder }} == 'appointment_service' || ${{ github.event.inputs.folder }} == 'patient_service')
+        if: env.skip_build == 'false' && 
         run: |
           cd ${{ github.event.inputs.folder }}
           python manage.py test
