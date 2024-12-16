@@ -1,5 +1,5 @@
-name: MediTrack System | Build and Deploy to GKE
-run-name: Deployment of ${{ github.event.inputs.folder }}_app
+name: MediTrack System | Build, Test, and Deploy to GKE
+run-name: Build, Test, and Deploy ${{ github.event.inputs.folder }}_app
 
 on:
   workflow_dispatch:
@@ -10,14 +10,16 @@ on:
         default: ''
 
 jobs:
-  build-and-push:
+  build-test-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Verify Folder Name
       - name: Verify Folder Name
         run: |
           echo 'Folder name: "${{ github.event.inputs.folder }}"'
 
+      # Step 2: Check for Folder Input
       - name: Check for Folder Input
         id: check-folder
         run: |
@@ -28,23 +30,44 @@ jobs:
             echo "skip_build=false" >> $GITHUB_ENV
           fi
 
-
+      # Step 3: Skip Job if No Folder Provided
       - name: Skip Job if No Folder Provided
         if: env.skip_build == 'true'
         run: echo "Skipping build as no folder was provided."
 
+      # Step 4: Checkout Code
       - name: Checkout Code
         if: env.skip_build == 'false'
         uses: actions/checkout@v3
 
-      - name: Verify Folder Exists
+      # Step 5: Install Python and Dependencies
+      - name: Set Up Python
+        if: env.skip_build == 'false'
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
         if: env.skip_build == 'false'
         run: |
-          if [ ! -d "${{ github.event.inputs.folder }}" ]; then
-            echo "Error: Folder '${{ github.event.inputs.folder }}' does not exist."
-            exit 1
-          fi
+          python -m pip install --upgrade pip
+          pip install -r ${{ github.event.inputs.folder }}/requirements.txt
+          pip install pytest pytest-django
 
+      # Step 6: Set Up Test Database
+      - name: Configure SQLite Database for Testing
+        if: env.skip_build == 'false'
+        run: |
+          export DJANGO_SETTINGS_MODULE="${{ github.event.inputs.folder }}.settings"
+          python manage.py migrate --no-input
+
+      # Step 7: Run Tests
+      - name: Run Tests
+        if: env.skip_build == 'false'
+        run: |
+          pytest --ds=${{ github.event.inputs.folder }}.settings ${{ github.event.inputs.folder }}/tests/
+
+      # Step 8: Log in to Docker Hub
       - name: Log in to Docker Hub
         if: env.skip_build == 'false'
         uses: docker/login-action@v2
@@ -52,6 +75,7 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
+      # Step 9: Build and Push Docker Image
       - name: Build and Push Docker Image
         if: env.skip_build == 'false'
         run: |
