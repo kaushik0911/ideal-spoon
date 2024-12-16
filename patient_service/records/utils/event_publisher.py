@@ -8,7 +8,7 @@ load_dotenv()
 
 def publish_event(event_type, data, queue_name="default_queue"):
     credentials = pika.PlainCredentials(os.getenv('RABBITMQ_USER'), os.getenv('RABBITMQ_PASS'))
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host="localhost", port=os.getenv('RABBITMQ_PORT'), credentials=credentials)) # Replace 'localhost' with your RabbitMQ host
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host=os.getenv('RABBITMQ_HOST'), port=os.getenv('RABBITMQ_PORT'), credentials=credentials)) # Replace 'localhost' with your RabbitMQ host
     channel = connection.channel()
     channel.queue_declare(queue_name)  # Declare queue if it doesn't exist
 
