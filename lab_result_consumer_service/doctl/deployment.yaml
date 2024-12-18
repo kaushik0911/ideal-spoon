@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lab-result-consumer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lab-result-consumer
+  template:
+    metadata:
+      labels:
+        app: lab-result-consumer
+    spec:
+      containers:
+      - name: lab-result-consumer
+        image: kaushiks93/lab_result_consumer_service_app:latest
+        imagePullPolicy: IfNotPresent
+        envFrom:
+          - secretRef:
+              name: lab-result-consumer-app-env
