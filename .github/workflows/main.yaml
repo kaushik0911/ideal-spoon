@@ -80,17 +80,14 @@ jobs:
           docker build -t kaushiks93/${{ github.event.inputs.folder }}_app:latest ${{ github.event.inputs.folder }}
           docker push kaushiks93/${{ github.event.inputs.folder }}_app:latest
 
-      # Step 9: Log in to DigitalOcean
-      - name: Set up DigitalOcean CLI
-        run: |
-          curl -sL https://github.com/digitalocean/doctl/releases/download/v1.119.0/doctl-1.119.0-linux-amd64.tar.gz | tar -xzv
-          sudo mv doctl /usr/local/bin/
-          doctl auth init -t ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+      # Step 9: Install doctl.
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
-      - name: Set up kubectl
-        run: |
-          echo "${{ secrets.KUBECONFIG }}" | base64 -d > kubeconfig
-          export KUBECONFIG=kubeconfig
+      - name: Save DigitalOcean kubeconfig with short-lived credentials
+        run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 ${{ secrets.CLUSTER_NAME }}
 
       - name: Test Kubernetes Cluster Access
         run: |
@@ -99,4 +96,4 @@ jobs:
       # Step 10: Deploy to DigitalOcean
       - name: Apply Kubernetes Manifests
         run: |
-          kubectl apply -f ./${{ github.event.inputs.folder }}/doctl/deployment.yaml
+          kubectl apply -f ${{ github.event.inputs.folder }}/doctl/deployment.yaml
