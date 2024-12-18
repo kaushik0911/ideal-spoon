@@ -1,4 +1,4 @@
-name: MediTrack System | Build, Test, and Deploy to GKE
+name: MediTrack System | Build, Test, and Deploy to DigitalOcean Kubernetes
 run-name: Build, Test, and Deploy ${{ github.event.inputs.folder }}_app
 
 on:
@@ -75,3 +75,20 @@ jobs:
         run: |
           docker build -t kaushiks93/${{ github.event.inputs.folder }}_app:latest ${{ github.event.inputs.folder }}
           docker push kaushiks93/${{ github.event.inputs.folder }}_app:latest
+
+      # Step 9: Log in to DigitalOcean
+      - name: Set up DigitalOcean CLI
+        run: |
+          curl -sL https://github.com/digitalocean/doctl/releases/latest/download/doctl-linux-amd64.tar.gz | tar -xzv
+          sudo mv doctl /usr/local/bin/
+          doctl auth init -t ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+      - name: Set up kubectl
+        run: |
+          echo "${{ secrets.KUBECONFIG }}" | base64 -d > kubeconfig
+          export KUBECONFIG=kubeconfig
+
+      # Step 10: Deploy to DigitalOcean
+      - name: Apply Kubernetes Manifests
+        run: |
+          kubectl apply -f ${{ github.event.inputs.folder }}/doctl/deployment.yaml
