@@ -86,3 +86,7 @@ docker build -t redshift-migration-service-app:latest .
 
 docker build -t patient-service-app:latest .
 
+
+kubectl get cronjobs
+
+
