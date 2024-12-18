@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: patient-consumer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: patient-consumer
+  template:
+    metadata:
+      labels:
+        app: patient-consumer
+    spec:
+      containers:
+      - name: patient-consumer
+        image: kaushiks93/patient_consumer_service_app:latest
+        imagePullPolicy: IfNotPresent
+        envFrom:
+          - secretRef:
+              name: patient-consumer-app-env
