@@ -87,10 +87,10 @@ jobs:
           sudo mv doctl /usr/local/bin/
           doctl auth init -t ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
-      # - name: Set up kubectl
-      #   run: |
-      #     echo "${{ secrets.KUBECONFIG }}" | base64 -d > kubeconfig
-      #     export KUBECONFIG=kubeconfig
+      - name: Set up kubectl
+        run: |
+          echo "${{ secrets.KUBECONFIG }}" | base64 -d > kubeconfig
+          export KUBECONFIG=kubeconfig
 
       # Step 10: Deploy to DigitalOcean
       - name: Apply Kubernetes Manifests
