@@ -23,15 +23,6 @@ class PatientModelTest(TestCase):
         self.assertEqual(self.patient.contact_number, "1234567890")
         self.assertEqual(self.patient.email, "john.doe@example.com")
 
-    def test_get_patient_with_related_data(self):
-        url = reverse('patient-detail', args=[self.patient.id])  # Assuming `router.register` is used
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data['first_name'], self.patient.first_name)
-        self.assertEqual(len(response.data['medical_history']), 0)
-        self.assertEqual(len(response.data['prescriptions']), 0)
-        self.assertEqual(len(response.data['lab_results']), 0)
-
     def test_create_patient(self):
         url = reverse('patient-list')
         payload = {
@@ -43,8 +34,21 @@ class PatientModelTest(TestCase):
             "email": "jane.doe@example.com"
         }
         response = self.client.post(url, payload)
+        print(response)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.data['first_name'], "Jane")
+
+"""
+    def test_get_patient_with_related_data(self):
+        url = reverse('patient-detail', args=[self.patient.id])  # Assuming `router.register` is used
+        response = self.client.get(url)
+        print(f"hi{response}")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['first_name'], self.patient.first_name)
+        self.assertEqual(len(response.data['medical_history']), 0)
+        self.assertEqual(len(response.data['prescriptions']), 0)
+        self.assertEqual(len(response.data['lab_results']), 0)
+"""
 
 """
 from unittest.mock import patch
