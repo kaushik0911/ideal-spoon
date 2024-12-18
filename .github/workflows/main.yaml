@@ -92,6 +92,10 @@ jobs:
           echo "${{ secrets.KUBECONFIG }}" | base64 -d > kubeconfig
           export KUBECONFIG=kubeconfig
 
+      - name: Test Kubernetes Cluster Access
+        run: |
+          kubectl get nodes
+
       # Step 10: Deploy to DigitalOcean
       - name: Apply Kubernetes Manifests
         run: |
