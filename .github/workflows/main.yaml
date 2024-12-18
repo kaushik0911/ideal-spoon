@@ -56,10 +56,14 @@ jobs:
 
       # Step 6: Run Tests
       - name: Run Django Tests
-        if: env.skip_build == 'false' && (${{ github.event.inputs.folder }} == 'appointment_service' || ${{ github.event.inputs.folder }} == 'patient_service')
+        if: env.skip_build == 'false'
         run: |
-          cd ${{ github.event.inputs.folder }}
-          python manage.py test
+          if [ "${{ github.event.inputs.folder }}" = "appointment_service" ] || [ "${{ github.event.inputs.folder }}" = "patient_service" ]; then
+            cd ${{ github.event.inputs.folder }}
+            python manage.py test
+          else
+            echo "Tests not applicable for this folder."
+          fi
 
       # Step 7: Log in to Docker Hub
       - name: Log in to Docker Hub
