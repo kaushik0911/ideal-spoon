@@ -95,4 +95,4 @@ jobs:
       # Step 10: Deploy to DigitalOcean
       - name: Apply Kubernetes Manifests
         run: |
-          kubectl apply -f ${{ github.event.inputs.folder }}/doctl/deployment.yaml
+          kubectl apply -f ./${{ github.event.inputs.folder }}/doctl/deployment.yaml
