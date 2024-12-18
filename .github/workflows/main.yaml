@@ -83,7 +83,7 @@ jobs:
       # Step 9: Log in to DigitalOcean
       - name: Set up DigitalOcean CLI
         run: |
-          curl -sL https://github.com/digitalocean/doctl/releases/latest/download/doctl-linux-amd64.tar.gz | tar -xzv
+          curl -sL https://github.com/digitalocean/doctl/releases/download/v1.119.0/doctl-1.119.0-linux-amd64.tar.gz | tar -xzv
           sudo mv doctl /usr/local/bin/
           doctl auth init -t ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
