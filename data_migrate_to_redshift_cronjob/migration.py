@@ -47,6 +47,8 @@ def fetch_rds_data():
             JOIN public.records_availability av ON a.availability_id = av.id
             LEFT JOIN public.records_prescription pr ON a.id = pr.appointment_id
             LEFT JOIN public.records_labresult lr ON a.id = lr.appointment_id;
+            WHERE
+                av.date = CURRENT_DATE - INTERVAL '1 day';
         """
         df = pd.read_sql_query(query, conn)  # Use pd.read_sql_query instead of deprecated pd.read_sql
         conn.close()
