@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: redshift-migration
 spec:
-  schedule: "* * * * *" # Run daily at midnight -> "0 0 * * *"
+  schedule: "0 0 * * *" # Run daily at midnight -> "0 0 * * *"
   successfulJobsHistoryLimit: 2
   jobTemplate:
     spec:
