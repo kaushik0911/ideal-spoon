@@ -46,7 +46,7 @@ def fetch_rds_data():
             JOIN public.records_patient p ON a.patient_id = p.id
             JOIN public.records_availability av ON a.availability_id = av.id
             LEFT JOIN public.records_prescription pr ON a.id = pr.appointment_id
-            LEFT JOIN public.records_labresult lr ON a.id = lr.appointment_id;
+            LEFT JOIN public.records_labresult lr ON a.id = lr.appointment_id
             WHERE
                 av.date = CURRENT_DATE - INTERVAL '1 day';
         """
