@@ -1,6 +1,6 @@
+import redshift_connector
 import psycopg2
 import pandas as pd
-from sqlalchemy import create_engine
 from dotenv import load_dotenv
 import os
 
@@ -20,6 +20,7 @@ REDSHIFT_PORT = os.getenv('REDSHIFTPORT', 5439)  # Default Redshift port
 REDSHIFT_USER = os.getenv('REDSHIFTUSER')
 REDSHIFT_PASSWORD = os.getenv('REDSHIFTPASSWORD')
 REDSHIFT_DB = os.getenv('REDSHIFTDB')
+
 
 def fetch_rds_data():
     """Fetch data from the RDS instance."""
@@ -46,29 +47,51 @@ def fetch_rds_data():
             JOIN public.records_patient p ON a.patient_id = p.id
             JOIN public.records_availability av ON a.availability_id = av.id
             LEFT JOIN public.records_prescription pr ON a.id = pr.appointment_id
-            LEFT JOIN public.records_labresult lr ON a.id = lr.appointment_id;
+            LEFT JOIN public.records_labresult lr ON a.id = lr.appointment_id
             WHERE
                 av.date = CURRENT_DATE - INTERVAL '1 day';
         """
-        df = pd.read_sql_query(query, conn)  # Use pd.read_sql_query instead of deprecated pd.read_sql
+        df = pd.read_sql_query(query, conn)
         conn.close()
         return df
     except Exception as e:
         print(f"Error fetching RDS data: {e}")
         raise
 
+
 def load_to_redshift(dataframe):
     """Load the data into the Redshift instance."""
     try:
-        engine = create_engine(
-            f'postgresql+psycopg2://{REDSHIFT_USER}:{REDSHIFT_PASSWORD}@{REDSHIFT_HOST}:{REDSHIFT_PORT}/{REDSHIFT_DB}'
+        conn = redshift_connector.connect(
+            host=REDSHIFT_HOST,
+            port=REDSHIFT_PORT,
+            database=REDSHIFT_DB,
+            user=REDSHIFT_USER,
+            password=REDSHIFT_PASSWORD
         )
-        # Append if table exists; replace otherwise
-        dataframe.to_sql('appointment_details', engine, index=False, if_exists='append')
-        engine.dispose()
+        cursor = conn.cursor()
+
+        # Define Redshift table schema (ensure it matches your table structure)
+        for _, row in dataframe.iterrows():
+            cursor.execute(
+                """
+                INSERT INTO appointment_details (
+                    appointment_id, doctor_id, doctor_name, specialty,
+                    patient_id, patient_name, appointment_date, start_time, end_time,
+                    appointment_status, medication, prescribed_date, notes,
+                    test_name, lab_result, date_conducted
+                )
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
+                """,
+                tuple(row)  # Convert row to a tuple
+            )
+        conn.commit()
+        cursor.close()
+        conn.close()
     except Exception as e:
         print(f"Error loading data to Redshift: {e}")
         raise
+
 
 def run_etl():
     """Run the ETL process."""
@@ -79,6 +102,7 @@ def run_etl():
         print("Data loaded successfully to Redshift.")
     except Exception as e:
         print(f"ETL process failed: {e}")
+
 
 if __name__ == "__main__":
     run_etl()
