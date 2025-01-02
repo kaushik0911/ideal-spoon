@@ -1,6 +1,11 @@
 {
     "cSpell.words": [
         "asgi",
+        "doctl",
+        "kaushiks",
+        "kubeconfig",
+        "Medi",
+        "pytest",
         "runserver",
         "viewsets"
     ],

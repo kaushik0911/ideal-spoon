@@ -4,10 +4,10 @@ This guide helps you set up and deploy services using Docker, Kubernetes, and Dj
 
 ## **1. Prerequisites**
 - Ensure the required tools are installed:
-  - [Docker](https://docs.docker.com/get-docker/)
-  - [Minikube](https://minikube.sigs.k8s.io/docs/start/)
-  - [Kubectl](https://kubernetes.io/docs/tasks/tools/)
-  - Python (preferably with `virtualenv` for environment management)
+- [Docker](https://docs.docker.com/get-docker/)
+- [Minikube](https://minikube.sigs.k8s.io/docs/start/)
+- [Kubectl](https://kubernetes.io/docs/tasks/tools/)
+- Python (preferably with `virtualenv` for environment management)
 
 ---
 
